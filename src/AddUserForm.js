@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import ClayForm, {ClayInput} from '@clayui/form';
+import { useBlogs } from './requests/useBlogs';
 
 import {addUser} from './request';
 
@@ -8,6 +9,8 @@ function AddUserForm() {
 	const [familyName, setFamilyName] = useState('');
 	const [givenName, setGivenName] = useState('');
 	const [userName, setUserName] = useState('');
+
+	const { blogs, getAllBlogs } = useBlogs();
 
 	const onButtonSubmit = useCallback(() => {
 		addUser({
@@ -29,6 +32,10 @@ function AddUserForm() {
 		givenName,
 		userName
 	]);
+
+	useEffect(() => {
+		console.log('blogs', blogs);
+	}, [blogs]);
 
 	return (
 		<div>
@@ -80,6 +87,11 @@ function AddUserForm() {
 			</ClayForm.Group>
 
 			<button className="btn btn-primary" onClick={() => onButtonSubmit()}>Add User</button>
+
+
+			
+			<button className="btn btn-primary" onClick={() => getAllBlogs()}>Get all blogs</button>
+			
 		</div>
 	);
 }
